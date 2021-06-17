@@ -1,8 +1,10 @@
 package com.backend.javabackend.service;
 
 import com.backend.javabackend.dto.FanficDto;
+import com.backend.javabackend.dto.FanficDtoShort;
 import com.backend.javabackend.entity.Fanfic;
 import com.backend.javabackend.mapper.FanficMapper;
+import com.backend.javabackend.mapper.FanficShortMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.backend.javabackend.repository.FanficRepository;
@@ -27,25 +29,50 @@ public class FanficService {
         return fanficToDto(repository.findById(id).orElse(null));
     }
 
+    public FanficDtoShort getFanficByIdShort(int id) {
+        return fanficToDtoShort(repository.findById(id).orElse(null));
+    }
+
     public FanficDto getFanficByAuthor(String name) {
 
         return fanficToDto(repository.findByAuthor(name));
+    }
+
+    public FanficDtoShort getFanficByAuthorShort(String name) {
+
+        return fanficToDtoShort(repository.findByAuthor(name));
     }
 
     public List<FanficDto> getFanfics() {
         return fanficsToDto(repository.findAll());
     }
 
+    public List<FanficDtoShort> getFanficsShort() {
+        return fanficsToDtoShort(repository.findAll());
+    }
+
     public List<FanficDto> getAllByAuthor(String name) {
         return fanficsToDto(repository.findAllByAuthor(name));
+    }
+
+    public List<FanficDtoShort> getAllByAuthorShort(String name) {
+        return fanficsToDtoShort(repository.findAllByAuthor(name));
     }
 
     public List<FanficDto> getAllByGenre(String genre) {
         return fanficsToDto(repository.findAllByGenre(genre));
     }
 
+    public List<FanficDtoShort> getAllByGenreShort(String genre) {
+        return fanficsToDtoShort(repository.findAllByGenre(genre));
+    }
+
     public List<FanficDto> getAllByFandom(String fandom) {
         return fanficsToDto(repository.findAllByFandom(fandom));
+    }
+
+    public List<FanficDtoShort> getAllByFandomShort(String fandom) {
+        return fanficsToDtoShort(repository.findAllByFandom(fandom));
     }
 
     public String deleteById(int id) {
@@ -66,6 +93,12 @@ public class FanficService {
         curr.setAvgRating(fanfic.getAvgRating());
         return fanficToDto(repository.save(curr));
 
+    }
+
+    private FanficDtoShort fanficToDtoShort(Fanfic fanfic) {return FanficShortMapper.INSTANCE.fanficDtoShort(fanfic);}
+
+    private List<FanficDtoShort> fanficsToDtoShort(List<Fanfic> fanfics) {
+        return FanficShortMapper.INSTANCE.fanficsToDtoShort(fanfics);
     }
 
     private FanficDto fanficToDto(Fanfic fanfic) {

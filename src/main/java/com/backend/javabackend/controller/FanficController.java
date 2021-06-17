@@ -1,6 +1,7 @@
 package com.backend.javabackend.controller;
 
 import com.backend.javabackend.dto.FanficDto;
+import com.backend.javabackend.dto.FanficDtoShort;
 import com.backend.javabackend.entity.Fanfic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import com.backend.javabackend.service.FanficService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/auth")
 public class FanficController {
 
     @Autowired
@@ -39,19 +41,51 @@ public class FanficController {
         return service.getFanficByAuthor(name);
     }
 
-    @GetMapping("/fanfics/{name}")
+    @GetMapping("/fanfics/findAllByAuthor/{name}")
     public List<FanficDto> findAllByAuthor(@PathVariable String name) {
         return service.getAllByAuthor(name);
     }
 
-    @GetMapping("/fanfics/{genre}")
+    @GetMapping("/fanfics/findAllByGenre/{genre}")
     public List<FanficDto> findAllByGenre(@PathVariable String genre){
         return service.getAllByGenre(genre);
     }
 
-    @GetMapping("/fanfics/{fandom}")
+    @GetMapping("/fanfics/findAllByFandom/{fandom}")
     public List<FanficDto> findAllByFandom(@PathVariable String fandom){
         return service.getAllByFandom(fandom);
+    }
+
+    @GetMapping("/short/findShortFanficById/{id}")
+    public FanficDtoShort findShortFanficById(@PathVariable int id){
+        return service.getFanficByIdShort(id);
+    }
+
+    @GetMapping("/short/findShortByName/{name}")
+    public FanficDtoShort findShortFanficByAuthor(@PathVariable String name){
+        return service.getFanficByAuthorShort(name);
+    }
+
+    @GetMapping("/short/findAllByAuthor/{name}")
+    public List<FanficDtoShort> findAllByAuthorShort(@PathVariable String name) {
+
+        return service.getAllByAuthorShort(name);
+    }
+
+    @GetMapping("/short/all")
+    public List<FanficDtoShort> findAllShort() {
+        return service.getFanficsShort();
+    }
+
+    @GetMapping("/short/findAllByGenre/{genre}")
+    public List<FanficDtoShort> findAllByGenreShort(@PathVariable String genre){
+
+        return service.getAllByGenreShort(genre);
+    }
+
+    @GetMapping("/short/findAllByFandom/{fandom}")
+    public List<FanficDtoShort> findAllByFandomShort(@PathVariable String fandom){
+        return service.getAllByFandomShort(fandom);
     }
 
     @PutMapping("/update")

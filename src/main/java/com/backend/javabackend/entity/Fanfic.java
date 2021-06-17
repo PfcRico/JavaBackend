@@ -1,16 +1,12 @@
 package com.backend.javabackend.entity;
 
-import lombok.*;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(name = "FANFIC_TBL")
 public class Fanfic {
@@ -28,6 +24,8 @@ public class Fanfic {
     private int quantityRatings = 1;
     private double avgRating = rating / quantityRatings;
 
+
+    public Fanfic(){}
 
     public int getId() {
         return id;
@@ -107,5 +105,43 @@ public class Fanfic {
 
     public void setAvgRating(double avgRating) {
         this.avgRating = avgRating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Fanfic fanfic = (Fanfic) o;
+
+        if (id != fanfic.id) return false;
+        if (Double.compare(fanfic.rating, rating) != 0) return false;
+        if (quantityRatings != fanfic.quantityRatings) return false;
+        if (Double.compare(fanfic.avgRating, avgRating) != 0) return false;
+        if (!name.equals(fanfic.name)) return false;
+        if (!author.equals(fanfic.author)) return false;
+        if (!fandom.equals(fanfic.fandom)) return false;
+        if (!genre.equals(fanfic.genre)) return false;
+        if (!creationDate.equals(fanfic.creationDate)) return false;
+        return picUrl.equals(fanfic.picUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + author.hashCode();
+        result = 31 * result + fandom.hashCode();
+        result = 31 * result + genre.hashCode();
+        result = 31 * result + creationDate.hashCode();
+        result = 31 * result + picUrl.hashCode();
+        temp = Double.doubleToLongBits(rating);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + quantityRatings;
+        temp = Double.doubleToLongBits(avgRating);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }
