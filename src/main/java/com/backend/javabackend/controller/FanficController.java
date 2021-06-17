@@ -2,7 +2,6 @@ package com.backend.javabackend.controller;
 
 import com.backend.javabackend.dto.FanficDto;
 import com.backend.javabackend.dto.FanficDtoShort;
-import com.backend.javabackend.entity.Fanfic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.backend.javabackend.service.FanficService;
@@ -18,6 +17,7 @@ public class FanficController {
 
     @PostMapping("/addFanfic")
     public FanficDto addFanfic(@RequestBody FanficDto fanficDto) {
+
         return service.saveFanfic(fanficDto);
     }
 
