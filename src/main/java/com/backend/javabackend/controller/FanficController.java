@@ -9,7 +9,7 @@ import com.backend.javabackend.service.FanficService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/auth")
+//@RequestMapping("/api/auth")
 public class FanficController {
 
     @Autowired
