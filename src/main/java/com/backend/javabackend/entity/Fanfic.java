@@ -1,9 +1,6 @@
 package com.backend.javabackend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -18,6 +15,9 @@ public class Fanfic {
     private String author;
     private String fandom;
     private String genre;
+
+    @Column(columnDefinition = "TEXT")
+    private String text;
     private Date creationDate = new Date();
     private String picUrl;
     private double rating = 5;
@@ -107,6 +107,14 @@ public class Fanfic {
         this.avgRating = avgRating;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,6 +130,7 @@ public class Fanfic {
         if (!author.equals(fanfic.author)) return false;
         if (!fandom.equals(fanfic.fandom)) return false;
         if (!genre.equals(fanfic.genre)) return false;
+        if (!text.equals(fanfic.text)) return false;
         if (!creationDate.equals(fanfic.creationDate)) return false;
         return picUrl.equals(fanfic.picUrl);
     }
@@ -135,6 +144,7 @@ public class Fanfic {
         result = 31 * result + author.hashCode();
         result = 31 * result + fandom.hashCode();
         result = 31 * result + genre.hashCode();
+        result = 31 * result + text.hashCode();
         result = 31 * result + creationDate.hashCode();
         result = 31 * result + picUrl.hashCode();
         temp = Double.doubleToLongBits(rating);

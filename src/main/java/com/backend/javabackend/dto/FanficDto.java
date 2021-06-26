@@ -9,11 +9,21 @@ public class FanficDto {
     private String genre;
     private String picUrl;
     private String creationDate;
+    private String text;
     private double rating = 5;
     private int quantityRatings = 1;
     private double avgRating = rating / quantityRatings;
 
     public FanficDto(){}
+
+    public FanficDto(String name, String author, String fandom, String genre, String picUrl, String text) {
+        this.name = name;
+        this.author = author;
+        this.fandom = fandom;
+        this.genre = genre;
+        this.picUrl = picUrl;
+        this.text = text;
+    }
 
     public int getId() {
         return id;
@@ -95,6 +105,14 @@ public class FanficDto {
         this.picUrl = picUrl;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,7 +128,9 @@ public class FanficDto {
         if (!author.equals(fanficDto.author)) return false;
         if (!fandom.equals(fanficDto.fandom)) return false;
         if (!genre.equals(fanficDto.genre)) return false;
-        return creationDate.equals(fanficDto.creationDate);
+        if (!picUrl.equals(fanficDto.picUrl)) return false;
+        if (!creationDate.equals(fanficDto.creationDate)) return false;
+        return text.equals(fanficDto.text);
     }
 
     @Override
@@ -122,7 +142,9 @@ public class FanficDto {
         result = 31 * result + author.hashCode();
         result = 31 * result + fandom.hashCode();
         result = 31 * result + genre.hashCode();
+        result = 31 * result + picUrl.hashCode();
         result = 31 * result + creationDate.hashCode();
+        result = 31 * result + text.hashCode();
         temp = Double.doubleToLongBits(rating);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + quantityRatings;
