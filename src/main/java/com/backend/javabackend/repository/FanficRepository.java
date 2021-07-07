@@ -3,6 +3,7 @@ package com.backend.javabackend.repository;
 import com.backend.javabackend.entity.Fanfic;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public interface FanficRepository extends JpaRepository<Fanfic, Integer> {
@@ -13,4 +14,8 @@ public interface FanficRepository extends JpaRepository<Fanfic, Integer> {
     List<Fanfic> findAllByGenre(String genre);
 
     List<Fanfic> findAllByFandom(String fandom);
+
+    List<Fanfic> findAllByOrderByCreationDateDesc();
+
+    List<Fanfic> findAllByOrderByAvgRatingDesc();
 }

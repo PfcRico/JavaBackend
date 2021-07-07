@@ -7,16 +7,29 @@ import com.backend.javabackend.entity.Fanfic;
 import com.backend.javabackend.mapper.FanficMapper;
 import com.backend.javabackend.mapper.FanficShortMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.backend.javabackend.repository.FanficRepository;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FanficService {
 
     @Autowired
     private FanficRepository repository;
+
+    public List<FanficDto> findAllSorted(String sort){
+        if (sort.equals("date")){
+            return fanficsToDto(repository.findAllByOrderByCreationDateDesc());
+        }
+        if (sort.equals("rating")){
+            return fanficsToDto(repository.findAllByOrderByAvgRatingDesc());
+        }
+        return fanficsToDto(repository.findAll(Sort.by(Sort.Direction.ASC, "id")));
+    }
 
     public FanficDto saveFanfic(FanficDto fanficDto) {
         return fanficToDto(repository.save(fanficDtoToFanfic(fanficDto)));
@@ -62,10 +75,20 @@ public class FanficService {
         return fanficToDtoShort(repository.findByAuthor(name));
     }
 
-    public List<FanficDto> getFanfics() {
+    public Page<FanficDto> getFanficsPaged(Optional<Integer> page, Optional<String> sortBy) {
         if (repository.findAll().isEmpty()){
             throw new BusinessException ("404", "Fanfics not found", "DB is empty");
         }
+
+        return repository.findAll(PageRequest.of(page.orElse(0), 5, Sort.Direction.ASC,
+                sortBy.orElse("id"))).map(FanficMapper.INSTANCE::fanficDto);
+    }
+
+    public List<FanficDto> getFanfics(){
+        return fanficsToDto(repository.findAll());
+    }
+
+    public List<FanficDto> getFanficsSort(){
         return fanficsToDto(repository.findAll());
     }
 

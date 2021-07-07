@@ -2,18 +2,31 @@ package com.backend.javabackend.controller;
 
 import com.backend.javabackend.dto.FanficDto;
 import com.backend.javabackend.dto.FanficDtoShort;
+import com.backend.javabackend.repository.SearchRepo;
+import com.backend.javabackend.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import com.backend.javabackend.service.FanficService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 //@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FanficController {
 
     @Autowired
     private FanficService service;
+
+    @Autowired
+    private SearchService searchService;
+
+    @GetMapping("/search/{word}")
+    public List<FanficDto> searchByWord(@PathVariable String word){
+        return searchService.findWordInText(word);
+    }
 
     @PostMapping("/addFanfic")
     public FanficDto addFanfic(@RequestBody FanficDto fanficDto) {
@@ -31,9 +44,23 @@ public class FanficController {
         return service.getFanficById(id);
     }
 
+    @GetMapping("/fanficsPaged")
+    public Page<FanficDto> findAll(
+            @RequestParam Optional<Integer> page,
+            @RequestParam Optional<String> sortBy
+            ) {
+        return service.getFanficsPaged(page, sortBy);
+    }
+
     @GetMapping("/fanfics")
-    public List<FanficDto> findAll() {
+    public List<FanficDto> findAll(){
         return service.getFanfics();
+    }
+
+
+    @GetMapping("/fanficsSorted")
+    public List<FanficDto> findAll(@RequestParam String ordering){
+        return service.findAllSorted(ordering);
     }
 
     @GetMapping("/fanficByName/{name}")

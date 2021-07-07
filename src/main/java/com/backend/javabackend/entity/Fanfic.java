@@ -1,22 +1,31 @@
 package com.backend.javabackend.entity;
 
+import org.hibernate.search.annotations.Field;
+import org.springframework.stereotype.Indexed;
+
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
 @Table(name = "FANFIC_TBL")
+@Indexed
 public class Fanfic {
 
     @Id
     @GeneratedValue
     private int id;
+
+    @Field
     private String name;
+
+    @Field
     private String author;
     private String fandom;
     private String genre;
 
     @Column(columnDefinition = "TEXT")
+    @Field
     private String text;
     private Date creationDate = new Date();
     private String picUrl;
