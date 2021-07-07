@@ -18,6 +18,7 @@
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
             <start-class>com.backend.javabackend.JavaBackendApplication</start-class>
+        <property name="hibernate.connection.characterEncoding">utf8</property>
     </properties>
     <dependencies>
         <dependency>
