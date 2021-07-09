@@ -14,7 +14,8 @@ import java.util.Optional;
 
 @RestController
 //@RequestMapping("/api/auth")
-@CrossOrigin(origins = "https://fanfic-web.herokuapp.com")
+//@CrossOrigin(origins = "https://fanfic-web.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FanficController {
 
     @Autowired
@@ -118,6 +119,11 @@ public class FanficController {
     @PutMapping("/update")
     public FanficDto updateFanfic(@RequestBody FanficDto fanfic) {
         return service.updateFanfic(fanfic);
+    }
+
+    @PutMapping("/update/{fanficToRate}")
+    public FanficDto updateFanficRating(@PathVariable String fanficToRate) {
+        return service.updateRating(fanficToRate);
     }
 
     @DeleteMapping("/deleteFanfic/{id}")

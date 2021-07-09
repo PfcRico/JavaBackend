@@ -124,6 +124,11 @@ public class Fanfic {
         this.text = text;
     }
 
+    public void addRating(int rating){
+        this.rating += rating;
+        this.quantityRatings++;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

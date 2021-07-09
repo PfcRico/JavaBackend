@@ -6,6 +6,8 @@ import com.backend.javabackend.dto.FanficDtoShort;
 import com.backend.javabackend.entity.Fanfic;
 import com.backend.javabackend.mapper.FanficMapper;
 import com.backend.javabackend.mapper.FanficShortMapper;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,21 @@ public class FanficService {
 
     @Autowired
     private FanficRepository repository;
+
+    public FanficDto updateRating(String info){
+        try {
+            JSONObject obj = new JSONObject(info);
+            int id = Integer.parseInt(obj.getString("id"));
+            int rating = Integer.parseInt(obj.getString("rating"));
+            Fanfic fan = repository.getById(id);
+            fan.addRating(rating);
+            updateFanfic(fanficToDto(fan));
+            return fanficToDto(fan);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<FanficDto> findAllSorted(String sort){
         if (sort.equals("date")){
