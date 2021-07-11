@@ -2,8 +2,6 @@ package com.backend.javabackend.controller;
 
 import com.backend.javabackend.dto.FanficDto;
 import com.backend.javabackend.dto.FanficDtoShort;
-import com.backend.javabackend.repository.SearchRepo;
-import com.backend.javabackend.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -13,21 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@RequestMapping("/api/auth")
 //@CrossOrigin(origins = "https://fanfic-web.herokuapp.com")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class FanficController {
 
     @Autowired
     private FanficService service;
-
-    @Autowired
-    private SearchService searchService;
-
-    @GetMapping("/search/{word}")
-    public List<FanficDto> searchByWord(@PathVariable String word){
-        return searchService.findWordInText(word);
-    }
 
     @PostMapping("/addFanfic")
     public FanficDto addFanfic(@RequestBody FanficDto fanficDto) {
@@ -121,9 +110,9 @@ public class FanficController {
         return service.updateFanfic(fanfic);
     }
 
-    @PutMapping("/update/{fanficToRate}")
-    public FanficDto updateFanficRating(@PathVariable String fanficToRate) {
-        return service.updateRating(fanficToRate);
+    @PostMapping ("/updateId")
+    public FanficDto updateFanficRating(@RequestBody String fanficToRate) {
+       return service.updateRating(fanficToRate);
     }
 
     @DeleteMapping("/deleteFanfic/{id}")

@@ -31,7 +31,7 @@ public class Fanfic {
     private String picUrl;
     private double rating = 5;
     private int quantityRatings = 1;
-    private double avgRating = rating / quantityRatings;
+    private double avgRating = 1;
 
 
     public Fanfic(){}
@@ -127,6 +127,11 @@ public class Fanfic {
     public void addRating(int rating){
         this.rating += rating;
         this.quantityRatings++;
+        calculateRating();
+    }
+
+    private void calculateRating(){
+        this.avgRating = this.rating / this.quantityRatings;
     }
 
     @Override

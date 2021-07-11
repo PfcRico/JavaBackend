@@ -27,7 +27,9 @@ public class FanficService {
         try {
             JSONObject obj = new JSONObject(info);
             int id = Integer.parseInt(obj.getString("id"));
+            System.out.println(id);
             int rating = Integer.parseInt(obj.getString("rating"));
+            System.out.println(rating);
             Fanfic fan = repository.getById(id);
             fan.addRating(rating);
             updateFanfic(fanficToDto(fan));
